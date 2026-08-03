@@ -8,7 +8,7 @@ class Game
 	Box paddle;
 
 	// TODO #1 - Instead of storing 1 brick, store a vector of bricks (by value)
-	Box brick;
+	Box brick[5];
 
 public:
 	Game();
