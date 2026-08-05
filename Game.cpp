@@ -20,6 +20,9 @@ void Game::Reset()
 	ResetBall();
 
 	// TODO #2 - Add this brick and 4 more bricks to the vector
+	
+		brick.clear();
+	
 	for (int i = 0; i < 5; i++) {
 		Box bricks;
 		brick.push_back(bricks);
@@ -79,32 +82,48 @@ void Game::Render() const
 	Console::Clear();
 	if (brick.size() == 0) {
 		system("cls");
+		for (int i = 0; i < 15; i++) {
+			std::cout << "\n";
+		}
+		for (int i = 0; i < 35; i++) {
+			std::cout << " ";
+		}
+		std::cout << "You win! Press R to play again.";
+
+		system("pause >null");
+		system("cls");
+
+	}
+	if (ball.y_position == 30) {
+
+		system("cls");
 		for(int i = 0; i < 15; i++) {
 			std::cout << "\n";
 		}
 		for (int i = 0; i < 35;i++) {
 			std::cout << " ";
 		}
-		std::cout << "You win! Press R to play again. twise";
+		std::cout << "You lose. Press R to play again.";
 
 		system("pause >null");
 		system("cls");
+		
 	}
-	if (ball.y_position > 30) {
-		system("cls");
-		std::cout << "test";
-	}
-	paddle.Draw();
+	system("cls");
+paddle.Draw();
 	ball.Draw();
+	
+	
 
 	// TODO #3 - Update render to render all bricks
+	
 	for (int i = 0; i < brick.size();i++) {
 	brick[i].Draw();
 
 	}
 	
 
-	Console::Lock(false);
+ 	Console::Lock(false);
 }
 
 void Game::CheckCollision()
@@ -127,6 +146,7 @@ void Game::CheckCollision()
 	if (brick.size() == 0) {
 		ball.moving = false;
 		Render();
+		Reset();
 	}
 
 	if (paddle.Contains(ball.x_position + ball.x_velocity, ball.y_velocity + ball.y_position))
@@ -135,5 +155,10 @@ void Game::CheckCollision()
 	}
 
 	// TODO #7 - If ball touches bottom of window, pause ball and display (render) defeat text with R to reset
-	
+	if (ball.y_position > 30) {
+		ball.moving = false;
+		Render();
+		ball.y_position = 29;
+		Reset();
+	}
 }
